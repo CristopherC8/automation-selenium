@@ -12,41 +12,45 @@ class TestHeader(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Configuración inicial del navegador
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))  # Cambiar a otro navegador si es necesario
+        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         cls.driver.maximize_window()
-        cls.driver.get("https://ef-storefront-web.enviaflores.com/")  # Reemplazar con la URL de prueba
+        cls.driver.get("https://ef-storefront-web.enviaflores.com/")
 
-    def test_header_elements(self):
+    def test_01_header_elements(self):
         # Esperar a que el encabezado esté presente en el DOM
         header = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div"))
         )
-        # Verificar que el encabezado no sea None
-        self.assertIsNotNone(header, "El encabezado no está presente en la página")
-        # Verificar que el encabezado tenga el color de fondo correcto
+        
+        # Screenshot del encabezado
+        header.screenshot("inicio/screenshots/header.png")
 
-    def test_boton_carrito(self):
-        time.sleep(1)
-        # Esperar a que el botón de carrito esté presente y hacer clic
-        boton_carrito = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[4]"))
+    def test_02_buscar(self):
+        # Esperar a que el botón de buscar sea clickeable y hacer clic
+        boton_buscar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/div/div/div"))
         )
-        boton_carrito.click()
+        boton_buscar.click()
 
-        # Esperar a que el carrito esté visible
-        carrito = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='v-menu-33']/div/div"))
+        # Screenshot del formulario de búsqueda
+        boton_buscar.screenshot("inicio/screenshots/buscar.png")
+
+    def test_03_idioma_moneda(self):
+        # Esperar a que el botón de idioma y moneda sea clickeable y hacer clic
+        boton_idioma_moneda = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[1]"))
         )
-        self.assertIsNotNone(carrito, "El carrito no está visible después de hacer clic en el botón")
-        self.driver.save_screenshot("inicio/screenshots/carrito2.png")
+        boton_idioma_moneda.click()
 
-        # Esperar a que el botón de cerrar esté presente y hacer clic
-        boton_cerrar = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-33']/div/div/div[1]/button/span[3]/i"))
+        # Esperar a que el menú de idioma y moneda sea visible
+        menu_idioma_moneda = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//*[@id='v-menu-1']/div"))
         )
-        boton_cerrar.click()
 
-    def test_boton_perfil(self):
+        # Screenshot del menú de idioma y moneda
+        menu_idioma_moneda.screenshot("inicio/screenshots/idioma_moneda.png")
+
+    def test_04_boton_perfil(self):
         # Esperar a que el botón de perfil sea clickeable y hacer clic
         boton_perfil = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[3]"))
@@ -57,9 +61,11 @@ class TestHeader(unittest.TestCase):
         menu_perfil = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@id='v-menu-4']/div/div"))
         )
-        self.assertIsNotNone(menu_perfil, "El menú de perfil no está visible después de hacer clic en el botón")
 
-    def test_crear_cuenta(self):
+        # Screenshot del menú de perfil
+        menu_perfil.screenshot("inicio/screenshots/perfil.png")
+
+    def test_05_crear_cuenta(self):
         # Esperar a que el botón de crear cuenta esté presente y hacer clic
         boton_crear_cuenta = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-4']/div/div/div[2]"))
@@ -70,7 +76,9 @@ class TestHeader(unittest.TestCase):
         formulario_crear_cuenta = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]"))
         )
-        self.assertIsNotNone(formulario_crear_cuenta, "El formulario de creación de cuenta no está visible después de hacer clic en el botón")
+
+        # Screenshot del formulario de creación de cuenta
+        formulario_crear_cuenta.screenshot("inicio/screenshots/crear_cuenta.png")
 
         # Esperar a que el botón de cerrar esté presente y hacer clic
         boton_cerrar = WebDriverWait(self.driver, 10).until(
@@ -78,7 +86,7 @@ class TestHeader(unittest.TestCase):
         )
         boton_cerrar.click()
 
-    def test_iniciar_sesion(self):
+    def test_06_iniciar_sesion(self):
         # Esperar a que el botón de perfil sea clickeable y hacer clic
         boton_perfil = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[3]"))
@@ -95,11 +103,34 @@ class TestHeader(unittest.TestCase):
         formulario_inicio_sesion = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]"))
         )
-        self.assertIsNotNone(formulario_inicio_sesion, "El formulario de inicio de sesión no está visible después de hacer clic en el botón")
+
+        # Screenshot del formulario de inicio de sesión
+        formulario_inicio_sesion.screenshot("inicio/screenshots/iniciar_sesion.png")
 
         # Esperar a que el botón de cerrar esté presente y hacer clic
         boton_cerrar = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div/div[2]/div/div[2]/button"))
+        )
+        boton_cerrar.click()
+
+    def test_07_boton_carrito(self):
+        # Esperar a que el botón de carrito esté presente y hacer clic
+        boton_carrito = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[4]"))
+        )
+        boton_carrito.click()
+
+        # Esperar a que el carrito esté visible
+        carrito = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//*[@id='v-menu-33']/div/div"))
+        )
+
+        # Screenshot del carrito
+        carrito.screenshot("inicio/screenshots/carrito.png")
+
+        # Esperar a que el botón de cerrar esté presente y hacer clic
+        boton_cerrar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-33']/div/div/div[1]/button/span[3]/i"))
         )
         boton_cerrar.click()
    
