@@ -33,7 +33,7 @@ class TestHeader(unittest.TestCase):
         boton_buscar.click()
 
         # Screenshot del formulario de búsqueda
-        boton_buscar.screenshot("inicio/screenshots/buscar.png")
+        boton_buscar.screenshot("screenshots/header/buscar.png")
 
     def test_03_idioma_moneda(self):
         # Esperar a que el botón de idioma y moneda sea clickeable y hacer clic
@@ -48,7 +48,7 @@ class TestHeader(unittest.TestCase):
         )
 
         # Screenshot del menú de idioma y moneda
-        menu_idioma_moneda.screenshot("inicio/screenshots/idioma_moneda.png")
+        menu_idioma_moneda.screenshot("screenshots/header/idioma_moneda.png")
 
     def test_04_boton_perfil(self):
         # Esperar a que el botón de perfil sea clickeable y hacer clic
@@ -63,7 +63,7 @@ class TestHeader(unittest.TestCase):
         )
 
         # Screenshot del menú de perfil
-        menu_perfil.screenshot("inicio/screenshots/perfil.png")
+        menu_perfil.screenshot("screenshots/header/perfil.png")
 
     def test_05_crear_cuenta(self):
         # Esperar a que el botón de crear cuenta esté presente y hacer clic
@@ -78,7 +78,7 @@ class TestHeader(unittest.TestCase):
         )
 
         # Screenshot del formulario de creación de cuenta
-        formulario_crear_cuenta.screenshot("inicio/screenshots/crear_cuenta.png")
+        formulario_crear_cuenta.screenshot("screenshots/header/crear_cuenta.png")
 
         # Esperar a que el botón de cerrar esté presente y hacer clic
         boton_cerrar = WebDriverWait(self.driver, 10).until(
@@ -105,7 +105,7 @@ class TestHeader(unittest.TestCase):
         )
 
         # Screenshot del formulario de inicio de sesión
-        formulario_inicio_sesion.screenshot("inicio/screenshots/iniciar_sesion.png")
+        formulario_inicio_sesion.screenshot("screenshots/header/iniciar_sesion.png")
 
         # Esperar a que el botón de cerrar esté presente y hacer clic
         boton_cerrar = WebDriverWait(self.driver, 10).until(
@@ -126,7 +126,7 @@ class TestHeader(unittest.TestCase):
         )
 
         # Screenshot del carrito
-        carrito.screenshot("inicio/screenshots/carrito.png")
+        carrito.screenshot("screenshots/header/carrito.png")
 
         # Esperar a que el botón de cerrar esté presente y hacer clic
         boton_cerrar = WebDriverWait(self.driver, 10).until(
