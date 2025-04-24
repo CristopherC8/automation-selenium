@@ -16,14 +16,18 @@ class TestHeader(unittest.TestCase):
         cls.driver.maximize_window()
         cls.driver.get("https://ef-storefront-web.enviaflores.com/")
 
-    def test_01_header_elements(self):
-        # Esperar a que el encabezado esté presente en el DOM
-        header = WebDriverWait(self.driver, 10).until(
+    def verificar_header_elements(self):
+         # Esperar a que el encabezado esté presente en el DOM
+        WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div"))
         )
-        
+
+    def test_01_header_elements(self):
+        # Llamar a la función para verificar los elementos del encabezado
+        self.verificar_header_elements()
+
         # Screenshot del encabezado
-        header.screenshot("inicio/screenshots/header.png")
+        self.driver.save_screenshot("screenshots/header/header.png")
 
     def test_02_buscar(self):
         # Esperar a que el botón de buscar sea clickeable y hacer clic
@@ -133,7 +137,38 @@ class TestHeader(unittest.TestCase):
             EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-33']/div/div/div[1]/button/span[3]/i"))
         )
         boton_cerrar.click()
-   
+
+    def test_08_seleccionar_idioma(self):
+        # Esperar a que el botón de idioma sea clickeable y hacer clic
+        boton_idioma_moneda = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='__nuxt']/div[2]/div/header/div/div[2]/button[1]"))
+        )
+        boton_idioma_moneda.click()
+
+        # Esperar a que se muestre el menú de idioma
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//*[@id='v-menu-1']/div"))
+        )
+
+        # Hacer clic en English
+        boton_english = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-1']/div/div/div[2]/div[2]/div/div/div[2]"))
+        )
+        boton_english.click()
+
+        # Hacer clic en el botón de aplicar
+        boton_aplicar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='v-menu-1']/div/div/div[2]/button"))
+        )
+        boton_aplicar.click()
+        
+        # Llamar a la función para verificar los elementos del encabezado
+        self.verificar_header_elements()
+        
+        # Screenshot del encabezado después de cambiar el idioma
+        time.sleep(1)
+        self.driver.save_screenshot("screenshots/header/header_ingles.png")
+
     @classmethod
     def tearDownClass(cls):
         # Cerrar el navegador al finalizar las pruebas
